@@ -20,13 +20,17 @@ def load_data():
 if __name__ == "__main__":
     data = load_data()
     arguments = sys.argv
+    override = True
     if len(arguments) == 2:
         command = arguments[1]
         if command == "save":
 
             key = input("key: ")
-            data[key] = clipboard.paste()
-            save_data(data)
+            if key in data:
+                override = (input("Key already exists. Override? (Y/N) : ").lower() == 'y') 
+            if override:
+                data[key] = clipboard.paste()
+                save_data(data)
             print("Save operation successful")
         elif command == "load":
 
